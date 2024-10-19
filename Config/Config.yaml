@@ -1,6 +1,17 @@
+
 PROXY_URL: "http://192.168.54.92:9695"
 
 # EVAL_MODEL: "lmsys/vicuna-33b-v1.3"
 EVAL_LM_MODEL: "Llama-2-7b-hf"
 EVAL_QW_MODEL: "Qwen1.5-7B-Chat"
 EVAL_PROXY_MODEL: "gpt-4o-mini"
+
+mission: "DESCTION THE FEELING"
+
+Model:
+  name: SyncVote
+  args:
+    rebuild: False
+    queryKeyType: "VT"
+    queryNum: [5,5]
+    resultNum: 4
