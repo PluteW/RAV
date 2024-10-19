@@ -11,6 +11,8 @@ Data/*
 *.wav
 *.csv
 
+*.pth
+
 # C extensions
 *.so
 
