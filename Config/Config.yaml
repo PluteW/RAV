@@ -13,5 +13,5 @@ Model:
   args:
     rebuild: False
     queryKeyType: "VT"
-    queryNum: [5,5]
+    queryNum: [4,4]
     resultNum: 4

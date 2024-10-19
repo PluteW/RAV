@@ -2,15 +2,20 @@
 from PIL import Image
 
 from Config.Config import ConfigObject
+from Model.Model import Model
 from utils.Logger import logger, printLog
 from utils.Path import MISSION_DESCRIPTION
 from VectorDatabase.VectorDatabase import VisionTouchVD
 
 
-class SyncVote(object):
+class SyncVote(Model):
     def __init__(self, 
                  config: ConfigObject=None, 
-                 mission: str=MISSION_DESCRIPTION):
+                 mission: str=MISSION_DESCRIPTION
+                ):
+        super().__init__()
+        
+        self.name = "SyncVote"
         self.config = config
         self.mission = mission
         self.VD = VisionTouchVD(mission=mission, rebuild=config.rebuild)

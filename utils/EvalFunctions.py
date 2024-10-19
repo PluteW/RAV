@@ -187,7 +187,7 @@ def get_Proxy_evaluator(config: ConfigObject, eval_prompt):
         evalprompt = eval_prompt.format(**kwargs)
         req = requests.get(base_url+"/GetAnswer", params={"question":evalprompt})
         
-        return req.content
+        return req.content.decode('utf-8')
 
     return evaluate
 

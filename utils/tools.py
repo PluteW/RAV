@@ -25,3 +25,17 @@ def getScore(response):
         return score
     else:
         return -1
+    
+
+def getSummary(soces:list=None):
+    ss = []
+    failNum = 0
+    for s in soces:
+        if s == -1:
+            failNum += 1
+        else:
+            ss.append(s)
+    
+    avg = np.mean(ss).round(2)
+
+    return f"Test Num: {len(soces)}, UnMatch Num: {failNum}, Average Score(except UnMatch): {avg}."
