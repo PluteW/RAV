@@ -19,6 +19,8 @@ from Config.Config import ConfigObject
 from utils.Logger import logger, printLog
 from utils.Path import LLM_BASE_PATH
 
+SYSTEM_PROMPT = "You are a helpful and precise assistant for checking the quality of the answer."
+
 EVAL_PROMPT = """[User Question]: {prompt}\n\n
 [Assistant Response]: {assistant_response}\n
 [Correct Response]: {correct_response}\n\n
@@ -169,7 +171,7 @@ def get_gpt_evaluator(config: ConfigObject, eval_prompt):
     return evaluate
 
 
-def get_Proxy_evaluator(config: ConfigObject, eval_prompt):
+def get_Proxy_evaluator(config: ConfigObject, eval_prompt:str="", system_prompt:str=None):
     base_url = config.PROXY_URL
     conTestReq = requests.get(base_url+"/TestConnection")
     assert conTestReq.status_code == 200, "Please make sure you could connect the proxy server!"
@@ -185,7 +187,10 @@ def get_Proxy_evaluator(config: ConfigObject, eval_prompt):
 
     def evaluate(**kwargs):
         evalprompt = eval_prompt.format(**kwargs)
-        req = requests.get(base_url+"/GetAnswer", params={"question":evalprompt})
+        req = requests.get(base_url+"/GetAnswer", params={
+            "system_prompt": system_prompt,
+            "question":evalprompt,
+            })
         
         return req.content.decode('utf-8')
 
