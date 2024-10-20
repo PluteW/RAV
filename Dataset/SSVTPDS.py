@@ -3,15 +3,10 @@ import sys
 sys.path.append(".")
 sys.path.append("..")
 sys.path.append("../..")
-import random
-
-import numpy as np
-import torch
-from PIL import Image
 from torch.utils import data
 
 from Config.Config import ConfigObject
-from Dataloader.utils import read_csv
+from Dataset.utils import read_csv
 from utils.Path import MISSION_DESCRIPTION, SSVTP_DATA_PATH
 
 
@@ -26,9 +21,9 @@ class SSVTPDS(data.Dataset):
         self.mission = mission
 
         if self.mode == "train":
-            csvPath = "/home/aa/Desktop/WJL/VTRAG/Data/ssvtp/train.csv"
+            csvPath = SSVTP_DATA_PATH+"train.csv"
         elif self.mode == "test":
-            csvPath = "/home/aa/Desktop/WJL/VTRAG/Data/ssvtp/test.csv"
+            csvPath = SSVTP_DATA_PATH+"test.csv"
 
         self.data = read_csv(csvPath)
     

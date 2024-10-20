@@ -14,13 +14,15 @@ class SyncVote(Model):
                  mission: str=MISSION_DESCRIPTION
                 ):
         super().__init__()
-        
+
         self.name = "SyncVote"
         self.config = config
         self.mission = mission
-        self.VD = VisionTouchVD(mission=mission, rebuild=config.rebuild)
+        self.VD = VisionTouchVD(dataset=config.dataset, mission=mission, rebuild=config.rebuild)
 
-    def answer(self, vision:Image, touch:Image):
+    def answer(self, vision:str, touch:str):
+        vision = Image.open(vision)
+        touch = Image.open(touch)
         return self.vote(vision, touch)
         
 

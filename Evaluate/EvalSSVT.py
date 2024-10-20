@@ -11,7 +11,7 @@ from PIL import Image
 from torch.utils.data import DataLoader
 
 from Config.Config import getConfigFromYaml
-from Dataloader.SSVTPDS import SSVTPDS
+from Dataset.SSVTPDS import SSVTPDS
 from Evaluate.BatchEvalSSVT import conductBatchInputFile, formatBatchOutputFile
 from Model.Model import Model
 from Model.SyncVote import SyncVote
@@ -39,7 +39,7 @@ def TestOnSSVTDataset(
         reTest=False,
     ):
 
-    filePath = f"{EVAL_RESULT_PATH}/{model.name}.json"
+    filePath = f"{EVAL_RESULT_PATH}/SSVT/{model.name}.json"
 
     if reTest == False:
         if os.path.exists(filePath):
@@ -82,10 +82,8 @@ def TestOnSSVTDataset(
     for i, item in zip(range(len(datasets)),dataloader):
         visionPath = item[0][0]
         touchPath = item[1][0]
-        vision = Image.open(visionPath)
-        touch = Image.open(touchPath)
-
-        assistant_response = model.answer(vision, touch)
+        
+        assistant_response = model.answer(visionPath, touchPath)
         groundTruth = item[2][0].strip().replace(" ","")
 
         printLog(f"Item index {i}\n\tGROUND TRUTH: {groundTruth}, ASSISTANT: {assistant_response}", logger)
@@ -124,7 +122,7 @@ def TestOnSSVTDataset(
         printLog(f"Reult: \n\t{result}.", logger)
     else:
         conductBatchInputFile(model.name, config.EVAL_PROXY_MODEL)
-    
+
 
 
 if __name__ == "__main__":

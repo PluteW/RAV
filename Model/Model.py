@@ -9,5 +9,5 @@ class Model(ABC):
         self.name = "UNNAMED"
 
     @abstractmethod
-    def answer(self, vision:Image, touch:Image):
+    def answer(self, vision:str, touch:str):
         pass
