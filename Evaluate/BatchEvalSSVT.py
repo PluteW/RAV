@@ -1,4 +1,5 @@
 import json
+import os
 import sys
 
 sys.path.append(".")
@@ -10,13 +11,14 @@ from Config.Config import getConfigFromYaml
 from utils.EvalFunctions import EVAL_PROMPT, SYSTEM_PROMPT
 from utils.Logger import logger, printLog
 from utils.Path import EVAL_RESULT_PATH
-from utils.tools import getScore, getSummary
+from utils.tools import getJson, getScore, getSummary, saveJson
 
 
 def conductBatchInputFile(dataset, model, gptModel):
     filePath = f"{EVAL_RESULT_PATH}/{dataset}/{model}.json"
-    with open(filePath, 'r', encoding='utf-8') as json_file:
-        loaded_scores = json.load(json_file)
+    loaded_scores = getJson(filePath)
+    
+    checkIds(dataset, model, gptModel)
 
     fileOutPath = f"{EVAL_RESULT_PATH}/{dataset}/{model}-{gptModel}-BatchInput.jsonl"
 
@@ -50,13 +52,11 @@ def conductBatchInputFile(dataset, model, gptModel):
 
 def formatBatchOutputFile(dataset, model, gptModel):
     filePath = f"{EVAL_RESULT_PATH}/{dataset}/{model}.json"
-    with open(filePath, 'r', encoding='utf-8') as json_file:
-        loaded_scores = json.load(json_file)
+    loaded_scores = getJson(filePath)
     
     fileInputPath = f"{EVAL_RESULT_PATH}/{dataset}/{model}-{gptModel}-BatchOutput.json"
 
-    with open(fileInputPath, 'r', encoding='utf-8') as json_file:
-        batchOutput = json.load(json_file)
+    batchOutput = getJson(fileInputPath)
     
     filtered_data = {}
     score_list = []
@@ -92,16 +92,50 @@ def formatBatchOutputFile(dataset, model, gptModel):
     
     fileOutputPath = f"{EVAL_RESULT_PATH}/{dataset}/{model}-{gptModel}-BatchFormatOutput.json"
 
-    with open(fileOutputPath, 'w', encoding='utf-8') as jsonl_outfile:
-        json.dump(filtered_data, jsonl_outfile, ensure_ascii=False, indent=4)
+    saveJson(fileOutputPath, filtered_data)
+    # with open(fileOutputPath, 'w', encoding='utf-8') as jsonl_outfile:
+    #     json.dump(filtered_data, jsonl_outfile, ensure_ascii=False, indent=4)
 
+def checkFileIDs(fpFrom, fp):
+    itemsBase = getJson(fp)
+    itemsFrom = getJson(fpFrom)
 
+    items = {}
+    for k in itemsBase:
+        items[k] = itemsFrom[k]
+
+    fp_ = fpFrom.split(".")[0]+"-Checked.json"
+    if len(items.items()) != len(itemsFrom.items()):
+        saveJson(fp_, items)
+
+def checkIds(dataset, model, gptModel):
+    # gpt4 output
+    filePath = f"{EVAL_RESULT_PATH}/{dataset}/GPT4V.json"
+    
+    fileBasePath = f"{EVAL_RESULT_PATH}/{dataset}/{model}.json"
+    if os.path.exists(fileBasePath):
+        checkFileIDs(fileBasePath, filePath)
+
+    # fileInputPath = f"{EVAL_RESULT_PATH}/{dataset}/{model}-{gptModel}-BatchInput.jsonl"
+    # if os.path.exists(fileInputPath):
+    #     checkFileIDs(fileInputPath, filePath)
+        
+    # fileOutputPath = f"{EVAL_RESULT_PATH}/{dataset}/{model}-{gptModel}-BatchOutput.json"
+    # if os.path.exists(fileOutputPath):
+    #     checkFileIDs(fileOutputPath, filePath)
+
+    fileFMOutputPath = f"{EVAL_RESULT_PATH}/{dataset}/{model}-{gptModel}-BatchFormatOutput.json"
+    if os.path.exists(fileFMOutputPath):
+        checkFileIDs(fileFMOutputPath, filePath)
+    
 
 if __name__ == "__main__":
     configPath = "/home/aa/Desktop/WJL/VTRAG/Config/Config.yaml"
 
     config = getConfigFromYaml(configPath)
 
-    # conductBatchInputFile(config.dataset, config.Model.name, config.EVAL_PROXY_MODEL)
+    conductBatchInputFile(config.dataset, config.Model.name, config.EVAL_PROXY_MODEL)
 
-    formatBatchOutputFile(config.dataset, config.Model.name, config.EVAL_PROXY_MODEL)
+    # formatBatchOutputFile(config.dataset, config.Model.name, config.EVAL_PROXY_MODEL)
+
+    # checkIds(config.dataset, config.Model.name, config.EVAL_PROXY_MODEL)

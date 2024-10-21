@@ -38,7 +38,7 @@ def judgeScoresInStatics(inputfile1: str, inputfile2: str):
 
 if __name__ == "__main__":
 
-    file1 = "/home/aa/Desktop/WJL/VTRAG/Evaluate/EvalResult/SSVT/GPT4V-gpt-4-BatchFormatOutput.json"
+    # file1 = "/home/aa/Desktop/WJL/VTRAG/Evaluate/EvalResult/SSVT/GPT4V-gpt-4-BatchFormatOutput.json"
     
     # file2 = "/home/aa/Desktop/WJL/VTRAG/Evaluate/EvalResult/SSVT/SyncVote-gpt-4-BatchFormatOutput.json"
 
@@ -46,6 +46,10 @@ if __name__ == "__main__":
 
     # file2 = "/home/aa/Desktop/WJL/VTRAG/Evaluate/EvalResult/SSVT/TVL-BGS-gpt-4-BatchFormatOutput.json"
 
-    file2 = "/home/aa/Desktop/WJL/VTRAG/Evaluate/EvalResult/SSVT/TVL-S-gpt-4-BatchFormatOutput.json"
+    # file2 = "/home/aa/Desktop/WJL/VTRAG/Evaluate/EvalResult/SSVT/TVL-S-gpt-4-BatchFormatOutput.json"
+
+    file1 = "/home/aa/Desktop/WJL/VTRAG/Evaluate/EvalResult/HCT/GPT4V-gpt-4-BatchFormatOutput.json"
+
+    file2 = "/home/aa/Desktop/WJL/VTRAG/Evaluate/EvalResult/HCT/SyncVote-gpt-4-BatchFormatOutput-Checked.json"
 
     judgeScoresInStatics(file1, file2)

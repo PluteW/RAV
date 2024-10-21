@@ -1,3 +1,4 @@
+import json
 import os
 import random
 import re
@@ -19,6 +20,15 @@ def setSeed(seed):
    np.random.seed(seed)
    random.seed(seed)
 
+
+def saveJson(fp, data):
+    with open(fp, 'w', encoding='utf-8') as jsonl_outfile:
+        json.dump(data, jsonl_outfile, ensure_ascii=False, indent=4)
+
+def getJson(fp):
+    with open(fp, 'r', encoding='utf-8') as json_file:
+        items = json.load(json_file)
+    return items
 
 def getScore(response):
     # match = re.search(r'(\d+)', response)

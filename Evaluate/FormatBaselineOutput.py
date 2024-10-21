@@ -15,11 +15,13 @@ from utils.tools import getScore, getSummary
 
 
 def formatBatchOutputFile(dataset, model, gptModel, fileName):
+    # 参考的 ID 文件
     # filePath = f"{EVAL_RESULT_PATH}/{model}.json"
     filePath = f"/home/aa/Desktop/WJL/VTRAG/Evaluate/EvalResult/{dataset}/SyncVote.json"
     with open(filePath, 'r', encoding='utf-8') as json_file:
         loaded_scores = json.load(json_file)
     
+    # 目标的规整文件
     # fileInputPath = f"{EVAL_RESULT_PATH}/{model}-{gptModel}-BatchOutput.json"
     fileInputPath = f"/home/aa/Desktop/WJL/VTRAG/Evaluate/EvalResult/baseline/{dataset}/{fileName}.json"
     with open(fileInputPath, 'r', encoding='utf-8') as json_file:
@@ -80,10 +82,12 @@ def formatBatchOutputFile(dataset, model, gptModel, fileName):
 
 if __name__ == "__main__":
 
-    formatBatchOutputFile("SSVT", "TVL-B", "gpt4", "tvl_llama_vitb")
+    formatBatchOutputFile("HCT", "GPT4V", "gpt4", "GPT4V-gpt-4v-preview-Output")
 
-    # formatBatchOutputFile("SSVT", "TVL-BGS", "gpt4", "tvl_llama_vits_bgs")
+    # formatBatchOutputFile("HCT", "TVL-B", "gpt4", "tvl_llama_vitb")
 
-    # formatBatchOutputFile("SSVT", "TVL-S", "gpt4", "tvl_llama_vits")
+    # formatBatchOutputFile("HCT", "TVL-BGS", "gpt4", "tvl_llama_vits_bgs")
 
-    # formatBatchOutputFile("SSVT", "TVL-TINY", "gpt4", "tvl_llama_vittiny")
+    # formatBatchOutputFile("HCT", "TVL-S", "gpt4", "tvl_llama_vits")
+
+    # formatBatchOutputFile("HCT", "TVL-TINY", "gpt4", "tvl_llama_vittiny")

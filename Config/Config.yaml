@@ -8,7 +8,8 @@ EVAL_QW_MODEL: "Qwen1.5-7B-Chat"
 EVAL_PROXY_MODEL: "gpt-4"
 
 mission: "DESCTION THE FEELING"
-dataset: "SSVT"
+dataset: &dataset "SSVT"
+# dataset: &dataset "HCT"
 
 Model:
   name: SyncVote
@@ -19,7 +20,7 @@ Model:
     resultNum: 4
     dataset: *dataset 
 
-  # name: TVL-S
+  # name: TVL-B
 
   # name: GPT4V
   # args:

@@ -8,14 +8,12 @@ import json
 import logging
 import time
 
-from PIL import Image
 from torch.utils.data import DataLoader
 
 from Config.Config import getConfigFromYaml
-from Dataset.SSVTPDS import SSVTPDS
+from Dataset.HCTDS import HCTDS
 from Evaluate.BatchEvalSSVT import conductBatchInputFile, formatBatchOutputFile
 from Model.Model import Model
-from Model.SyncVote import SyncVote
 from utils.EvalFunctions import (
     EVAL_PROMPT,
     SYSTEM_PROMPT,
@@ -29,7 +27,8 @@ from utils.tools import getJson, getScore, getSummary, setSeed
 
 basicConfigPath = "/home/aa/Desktop/WJL/VTRAG/Config/Config.yaml"
 
-def TestOnSSVTDataset(
+
+def TestOnHCTDataset(
         model: Model=None,
         dataloader:DataLoader=None,
         batchEval:bool=True,
@@ -39,8 +38,7 @@ def TestOnSSVTDataset(
         save=False,
         reTest=False
     ):
-
-    filePath = f"{EVAL_RESULT_PATH}/SSVT/{model.name}.json"
+    filePath = f"{EVAL_RESULT_PATH}/HCT/{model.name}.json"
 
     if reTest == False:
         if os.path.exists(filePath):
@@ -65,7 +63,7 @@ def TestOnSSVTDataset(
 
     if dataloader == None:
         setSeed(21)
-        datasets = SSVTPDS("test", None, mission)
+        datasets = HCTDS("test", None, mission)
         dataloader = DataLoader(datasets,shuffle=True, batch_size=1)
 
     config = getConfigFromYaml(configPath)
@@ -122,20 +120,20 @@ def TestOnSSVTDataset(
         result = getSummary(score_list)
         printLog(f"Reult: \n\t{result}.", logger)
     else:
-        conductBatchInputFile("SSVT", model.name, config.EVAL_PROXY_MODEL)
+        conductBatchInputFile("HCT", model.name, config.EVAL_PROXY_MODEL)
 
-def getSSVTDummary(
+
+def getHCTSummary(
         fp:str="",
         model:str=""):
     if fp == "":
         assert model != "", "Check the model for evluation!"
-        fp = f"{EVAL_RESULT_PATH}/SSVT/{model}-gpt-4-BatchFormatOutput-Check.json"
+        fp = f"{EVAL_RESULT_PATH}/HCT/{model}-gpt-4-BatchFormatOutput-Check.json"
         if not os.path.exists(fp):
-            fp = f"{EVAL_RESULT_PATH}/SSVT/{model}-gpt-4-BatchFormatOutput.json"
+            fp = f"{EVAL_RESULT_PATH}/HCT/{model}-gpt-4-BatchFormatOutput.json"
         else:
             printLog(f"Cann't find evluation result for model: {model}", logger, logging.ERROR)
         printLog(f"Load evluation result for model: {model} from path : {fp}", logger)
-
     batchOutput = getJson(fp)
     score_list = []
 
@@ -144,13 +142,16 @@ def getSSVTDummary(
         score_list.append(score)
 
     result = getSummary(score_list)
-    printLog(f"Reult on SSVT: \n\t{result}", logger)
+    printLog(f"Reult on HCT: \n\t{result}", logger)
 
     return score_list
 
 if __name__ == "__main__":
     configPath = "/home/aa/Desktop/WJL/VTRAG/Config/Config.yaml"
 
-    config = getConfigFromYaml(configPath)
-    model = SyncVote(config.Model.args, config.mission)
-    TestOnSSVTDataset(model=model, batchEval=True, save=True, reTest=True)
+    # config = getConfigFromYaml(configPath)
+    # model = SyncVote(config.Model.args, config.mission)
+    # TestOnHCTDataset(model=model, batchEval=True, save=True, reTest=True)
+
+    fp = "/home/aa/Desktop/WJL/VTRAG/Evaluate/EvalResult/HCT/SyncVote-gpt-4-BatchFormatOutput-Checked.json"
+    getHCTSummary(fp)
