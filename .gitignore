@@ -3,7 +3,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-<<<<<<< HEAD
 **back**.py
 
 Experiment/
@@ -16,8 +15,6 @@ Data/*
 
 VTD_VD\*
 
-=======
->>>>>>> d62999f6793db35aabef4ac89f451b3c40935f96
 # C extensions
 *.so
 
@@ -109,15 +106,12 @@ ipython_config.py
 #   install all needed dependencies.
 #Pipfile.lock
 
-<<<<<<< HEAD
-=======
 # UV
 #   Similar to Pipfile.lock, it is generally recommended to include uv.lock in version control.
 #   This is especially recommended for binary packages to ensure reproducibility, and is more
 #   commonly ignored for libraries.
 #uv.lock
 
->>>>>>> d62999f6793db35aabef4ac89f451b3c40935f96
 # poetry
 #   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
 #   This is especially recommended for binary packages to ensure reproducibility, and is more
@@ -130,15 +124,11 @@ ipython_config.py
 #pdm.lock
 #   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
 #   in version control.
-<<<<<<< HEAD
-#   https://pdm.fming.dev/#use-with-ide
-.pdm.toml
-=======
+
 #   https://pdm.fming.dev/latest/usage/project/#working-with-version-control
 .pdm.toml
 .pdm-python
 .pdm-build/
->>>>>>> d62999f6793db35aabef4ac89f451b3c40935f96
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
 __pypackages__/
@@ -190,12 +180,12 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-<<<<<<< HEAD
+
 .vscode/setting.json
-=======
 # Ruff stuff:
 .ruff_cache/
 
 # PyPI configuration file
 .pypirc
->>>>>>> d62999f6793db35aabef4ac89f451b3c40935f96
+
+data_level0.bin
