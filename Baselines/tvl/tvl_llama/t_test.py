@@ -1,6 +1,8 @@
-import argparse 
-import numpy as np 
-import json 
+import argparse
+import json
+
+import numpy as np
+
 
 def get_scores(json_fp, dataset : str = None):
     with open(json_fp, "r") as f:
@@ -32,9 +34,9 @@ def get_scores_text(text_fp):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--tvl_path", type=str, required=True)
-    parser.add_argument("--alt_path", type=str, default=None)
-    parser.add_argument("--dataset", type=str, default=None)
+    parser.add_argument("--tvl_path", type=str, default="/home/aa/Desktop/WJL/VTRAG/Baselines/tvl/tvl_llama/results/tvl_llama_vittiny.json")
+    parser.add_argument("--alt_path", type=str, default="/home/aa/Desktop/WJL/VTRAG/Baselines/tvl/tvl_llama/results/gpt4v.json")
+    parser.add_argument("--dataset", type=str, default="ssvtp")
     args = parser.parse_args()
 
     if args.tvl_path.endswith(".json"):
@@ -46,7 +48,7 @@ if __name__ == "__main__":
     else:
         gpt4v_scores = get_scores("results/gpt4v.json", args.dataset)
 
-    print("VTL mean: ", np.mean(vtl_scores))
+    print("TVL mean: ", np.mean(vtl_scores))
     print("GPT4V mean: ", np.mean(gpt4v_scores))
 
     # running t test 

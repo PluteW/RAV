@@ -14,11 +14,12 @@ from utils.Path import EVAL_RESULT_PATH
 from utils.tools import getJson, getScore, getSummary, saveJson
 
 
-def conductBatchInputFile(dataset, model, gptModel):
+def conductBatchInputFile(dataset, model, gptModel, checkId=False):
     filePath = f"{EVAL_RESULT_PATH}/{dataset}/{model}.json"
     loaded_scores = getJson(filePath)
     
-    checkIds(dataset, model, gptModel)
+    if checkId:
+        checkIds(dataset, model, gptModel)
 
     fileOutPath = f"{EVAL_RESULT_PATH}/{dataset}/{model}-{gptModel}-BatchInput.jsonl"
 
@@ -134,8 +135,8 @@ if __name__ == "__main__":
 
     config = getConfigFromYaml(configPath)
 
-    conductBatchInputFile(config.dataset, config.Model.name, config.EVAL_PROXY_MODEL)
+    # conductBatchInputFile(config.dataset, config.Model.name, config.EVAL_PROXY_MODEL)
 
-    # formatBatchOutputFile(config.dataset, config.Model.name, config.EVAL_PROXY_MODEL)
+    formatBatchOutputFile(config.dataset, config.Model.name, config.EVAL_PROXY_MODEL)
 
     # checkIds(config.dataset, config.Model.name, config.EVAL_PROXY_MODEL)

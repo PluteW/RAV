@@ -1,20 +1,25 @@
 import json
 import os
+import sys
+from collections import OrderedDict
 from pathlib import Path
-import numpy as np
-from tqdm import tqdm 
 
+sys.path.append(".")
+sys.path.append("..")
+sys.path.append("../..")
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
-from .llama import Transformer, ModelArgs, RMSNorm
-from .tokenizer import Tokenizer
+from tqdm import tqdm
 from util.misc import download
+
+from Baselines.tvl.tvl_enc.tvl import TVL, ModalityType
+
+from .llama import ModelArgs, RMSNorm, Transformer
+from .tokenizer import Tokenizer
 from .utils import sample_top_p
 
-from tvl_enc.tvl import TVL, ModalityType
-from collections import OrderedDict
 
 class LLaMA_adapter(nn.Module):
     """ Masked Autoencoder with VisionTransformer backbone

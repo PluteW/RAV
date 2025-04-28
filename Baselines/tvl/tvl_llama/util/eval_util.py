@@ -1,7 +1,9 @@
+import os
+
+import llama
 import openai
 from transformers import pipeline
-import llama
-import os
+
 
 def get_evaluator(model_path, eval_prompt):
     pipe = pipeline(model=model_path, device_map="auto")

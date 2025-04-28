@@ -1,15 +1,16 @@
-import torch
-import yaml
-from torch.utils.data import Dataset
-from PIL import Image
-import json
-import llama.utils
-from llama import Tokenizer
 import copy
-import torchvision.transforms as transforms
-import pandas as pd
-import random
+import json
 import os
+import random
+
+import llama.utils
+import pandas as pd
+import torch
+import torchvision.transforms as transforms
+import yaml
+from llama import Tokenizer
+from PIL import Image
+from torch.utils.data import Dataset
 from tvl_enc import tacvis
 
 try:

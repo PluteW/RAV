@@ -1,31 +1,51 @@
 # example: OPENAI_API_KEY=<openai-key> CUDA_VISIBLE_DEVICES=0 python evaluate_all.py --has_lora --model_path ~/Documents/meta/tvl-hf/ckpt/tvl_llama/tvl_llama_vits.pth --gpt --active_modality_names tactile vision --tactile_model vit_small_patch16_224 --eval_datasets ssvtp hct --datasets_dir ~/dataset/tvl_dataset
-import os
 import argparse
-from tvl_enc import tacvis
-import json
 import csv
-from util.eval_util import get_evaluator, get_gpt_evaluator, EVAL_MODEL, EVAL_PROMPT, load_model
+import json
+import os
+
 import llama
+from tvl_enc import tacvis
+from util.eval_util import (
+    EVAL_MODEL,
+    EVAL_PROMPT,
+    get_evaluator,
+    get_gpt_evaluator,
+    load_model,
+)
+
+from Config.Config import getConfigFromYaml
+from utils.EvalFunctions import get_Proxy_evaluator
+
 
 def setup_parser():
     parser = argparse.ArgumentParser('eval', add_help=False)
-    parser.add_argument("--datasets_dir", type=str, help="Directory containing the datasets")
-    parser.add_argument('--model_path', type=str, required=True, help="Path to the LLaMA-adapter Checkpoint")
+    parser.add_argument("--datasets_dir", type=str, default="/home/aa/Desktop/WJL/VTRAG/Data",help="Directory containing the datasets")
+
+    parser.add_argument('--model_path', type=str, required=True, default="/home/aa/Desktop/WJL/VTRAG/Baselines/tvl/TVLModel/tvl_llama_vittiny.pth",
+                        help="Path to the LLaMA-adapter Checkpoint")
+
     parser.add_argument('--llama_type', type=str, default="llama-2-7b")
-    parser.add_argument('--llama_dir', type=str, default="/home/mfu/checkpoints/llama-2")
-    parser.add_argument('--has_lora', action='store_true', help='Whether to use LoRA layers.')
-    parser.add_argument('--crop_tacvis', action='store_true', help='whether to crop image observations')
+
+    parser.add_argument('--llama_dir', type=str, default="/home/aa/Desktop/WJL/LLMModel/Llama-2-7b")
+
+    parser.add_argument('--has_lora', action='store_true', help='Whether to use LoRA layers.', default=True)
+
+    parser.add_argument('--crop_tacvis', action='store_true', help='whether to crop image observations', default=True)
     parser.add_argument("--active_modality_names", type=str, nargs="+", default=["tactile", "vision"],
                         help="List of active modalities.")
+    
     parser.add_argument("--lora_modality_names", type=str, nargs="+", default=[],
                         help="List of active modalities.")
     parser.add_argument("--lora_rank", type=int, default=4, help="Rank of LoRA layers")
     parser.add_argument("--lora_layer_idxs", nargs="+", type=int, help="Layer indices to apply LoRA")
-    parser.add_argument("--checkpoint_path", type=str, default=None, help="Path to the tvl-encoder checkpoint.")
-    parser.add_argument("--gpt", action="store_true", help="Use GPT-4 to eval (requires OPENAI_API_KEY)")
+    parser.add_argument("--checkpoint_path", type=str, default="/home/aa/Desktop/WJL/VTRAG/Baselines/tvl/TVLModel/encoder/tvl_enc_vitsmall.pth", help="Path to the tvl-encoder checkpoint.")
+    parser.add_argument("--gpt", action="store_true", help="Use GPT-4 to eval (requires OPENAI_API_KEY)", default=True)
+
     parser.add_argument("--background_sub", action="store_true", help="Use background sub for tacvis")
     parser.add_argument("--eval_datasets", type=str, nargs="+", default=["ssvtp"], help="List of active modalities.", choices=["ssvtp", "hct"])
-    parser.add_argument('--tactile_model', type=str, default='resnet18', choices=["vit_base_patch16_224", "vit_small_patch16_224", "vit_tiny_patch16_224", "resnet18"],  help="Tactile encoder model")
+    parser.add_argument('--tactile_model', type=str, default='vit_small_patch16_224', choices=["vit_base_patch16_224", "vit_small_patch16_224", "vit_tiny_patch16_224", "resnet18"],  help="Tactile encoder model")
+
     parser.add_argument("--resume_from_json", type=str, default=None, help="Path to resume evaluation")
     return parser.parse_args()
 
@@ -59,10 +79,6 @@ def main():
     model = load_model(model_path, llama_dir, args)
     model.eval()
 
-    if use_gpt:
-        eval_fn = get_gpt_evaluator("gpt-4", EVAL_PROMPT)
-    else:
-        eval_fn = get_evaluator(EVAL_MODEL, EVAL_PROMPT)
     
     ratings = []
     images = []
@@ -122,6 +138,16 @@ def main():
                     backgrounds.append(os.path.join(folder_path, row[2]))
                     labels.append(row[3])
                     dataset_version.append("v2")
+
+    if use_gpt:
+        # eval_fn = get_gpt_evaluator("gpt-4", EVAL_PROMPT)
+        configPath = "/home/aa/Desktop/WJL/VTRAG/Config/Config.yaml"
+
+        config = getConfigFromYaml(configPath)
+        eval_fn = get_Proxy_evaluator(config, EVAL_PROMPT)
+    else:
+        eval_fn = get_evaluator(EVAL_MODEL, EVAL_PROMPT)
+    
 
     prompt = "This image gives tactile feelings of?"
     for idx, (image_fp, tactile_fp, background, label, dv) in enumerate(zip(images, tactiles, backgrounds, labels, dataset_version)):

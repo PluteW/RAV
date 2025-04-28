@@ -8,11 +8,20 @@ EVAL_QW_MODEL: "Qwen1.5-7B-Chat"
 EVAL_PROXY_MODEL: "gpt-4"
 
 mission: "DESCTION THE FEELING"
-dataset: &dataset "SSVT"
+# dataset: &dataset "SSVTP"
 # dataset: &dataset "HCT"
+dataset: &dataset "TVL"
 
 Model:
-  name: SyncVote
+  # name: SyncVote
+  # args:
+  #   rebuild: False
+  #   queryKeyType: "VT"
+  #   queryNum: [5,5]
+  #   resultNum: 4
+  #   dataset: *dataset 
+
+  name: DualVote
   args:
     rebuild: False
     queryKeyType: "VT"
@@ -20,9 +29,18 @@ Model:
     resultNum: 4
     dataset: *dataset 
 
-  # name: TVL-B
+  # name: WeightVote
+  # args:
+  #   rebuild: False
+  #   queryKeyType: "VT"
+  #   queryNum: [5,5]
+  #   resultNum: 4
+  #   dataset: *dataset 
+
+  # name: TVL-S
 
   # name: GPT4V
+
   # args:
   #   rebuild: False
   #   queryKeyType: "VT"

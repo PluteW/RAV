@@ -12,8 +12,11 @@ from torch.utils.data import DataLoader
 
 from Config.Config import getConfigFromYaml
 from Dataset.HCTDS import HCTDS
-from Evaluate.BatchEvalSSVT import conductBatchInputFile, formatBatchOutputFile
+from Evaluate.BatchEval import conductBatchInputFile, formatBatchOutputFile
+from Model.DualVote.DualVote import DualVote
 from Model.Model import Model
+from Model.SyncVote import SyncVote
+from Model.WeightVote import WeightVote
 from utils.EvalFunctions import (
     EVAL_PROMPT,
     SYSTEM_PROMPT,
@@ -149,9 +152,15 @@ def getHCTSummary(
 if __name__ == "__main__":
     configPath = "/home/aa/Desktop/WJL/VTRAG/Config/Config.yaml"
 
-    # config = getConfigFromYaml(configPath)
-    # model = SyncVote(config.Model.args, config.mission)
-    # TestOnHCTDataset(model=model, batchEval=True, save=True, reTest=True)
+    config = getConfigFromYaml(configPath)
+    if config.Model.name == "SyncVote":
+      model = SyncVote(config.Model.args, config.mission)
+    elif config.Model.name == "DualVote":
+        model = DualVote(config.Model.args, config.mission)
+    elif config.Model.name == "WeightVote":
+        model = WeightVote(config.Model.args, config.mission)
 
-    fp = "/home/aa/Desktop/WJL/VTRAG/Evaluate/EvalResult/HCT/SyncVote-gpt-4-BatchFormatOutput-Checked.json"
-    getHCTSummary(fp)
+    TestOnHCTDataset(model=model, batchEval=True, save=True, reTest=True)
+
+    # fp = "/home/aa/Desktop/WJL/VTRAG/Evaluate/EvalResult/HCT/SyncVote-gpt-4-BatchFormatOutput-Checked.json"
+    # getHCTSummary(fp)

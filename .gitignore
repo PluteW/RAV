@@ -13,6 +13,8 @@ Data/*
 
 *.pth
 
+VTD_VD\*
+
 # C extensions
 *.so
 
