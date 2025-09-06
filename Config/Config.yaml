@@ -13,6 +13,15 @@ mission: "DESCTION THE FEELING"
 dataset: &dataset "TVL"
 
 Model:
+
+  name: KNN
+  args:
+    rebuild: False
+    queryKeyType: "VT"
+    queryNum: 5
+    resultNum: 4
+    dataset: *dataset
+
   # name: SyncVote
   # args:
   #   rebuild: False
@@ -21,13 +30,13 @@ Model:
   #   resultNum: 4
   #   dataset: *dataset 
 
-  name: DualVote
-  args:
-    rebuild: False
-    queryKeyType: "VT"
-    queryNum: [5,5]
-    resultNum: 4
-    dataset: *dataset 
+  # name: DualVote
+  # args:
+  #   rebuild: False
+  #   queryKeyType: "VT"
+  #   queryNum: [5,5]
+  #   resultNum: 4
+  #   dataset: *dataset 
 
   # name: WeightVote
   # args:

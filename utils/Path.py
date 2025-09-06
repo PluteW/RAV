@@ -1,4 +1,3 @@
-
 BASE_PATH = "/home/aa/Desktop/WJL/VTRAG/"
 
 # DATASET
@@ -44,6 +43,32 @@ VD_VD_V_TVL = "/home/aa/Desktop/WJL/VTRAG/VectorDatabase/VD_VD/TVL/V"
 VD_VD_T_TVL = "/home/aa/Desktop/WJL/VTRAG/VectorDatabase/VD_VD/TVL/T"
 VD_VD_W_TVL = "/home/aa/Desktop/WJL/VTRAG/VectorDatabase/VD_VD/TVL/W"
 
+
+VTD_VD_V_SSVTP_KNN = "/home/aa/Desktop/WJL/VTRAG/VectorDatabase/VTD_VD_KNN/SSVTP/V"
+VTD_VD_T_SSVTP_KNN = "/home/aa/Desktop/WJL/VTRAG/VectorDatabase/VTD_VD_KNN/SSVTP/T"
+VTD_VD_W_SSVTP_KNN = "/home/aa/Desktop/WJL/VTRAG/VectorDatabase/VTD_VD_KNN/SSVTP/W"
+
+VD_VD_V_SSVTP_KNN = "/home/aa/Desktop/WJL/VTRAG/VectorDatabase/VTD_VD_KNN/SSVTP/V"
+VD_VD_T_SSVTP_KNN = "/home/aa/Desktop/WJL/VTRAG/VectorDatabase/VTD_VD_KNN/SSVTP/T"
+VD_VD_W_SSVTP_KNN = "/home/aa/Desktop/WJL/VTRAG/VectorDatabase/VTD_VD_KNN/SSVTP/W"
+
+VTD_VD_V_HCT_KNN = "/home/aa/Desktop/WJL/VTRAG/VectorDatabase/VTD_VD_KNN/HCT/V"
+VTD_VD_T_HCT_KNN = "/home/aa/Desktop/WJL/VTRAG/VectorDatabase/VTD_VD_KNN/HCT/T"
+VTD_VD_W_HCT_KNN = "/home/aa/Desktop/WJL/VTRAG/VectorDatabase/VTD_VD_KNN/HCT/W"
+
+VD_VD_V_HCT_KNN = "/home/aa/Desktop/WJL/VTRAG/VectorDatabase/VTD_VD_KNN/HCT/V"
+VD_VD_T_HCT_KNN = "/home/aa/Desktop/WJL/VTRAG/VectorDatabase/VTD_VD_KNN/HCT/T"
+VD_VD_W_HCT_KNN = "/home/aa/Desktop/WJL/VTRAG/VectorDatabase/VTD_VD_KNN/HCT/W"
+
+
+VTD_VD_V_TVL_KNN = "/home/aa/Desktop/WJL/VTRAG/VectorDatabase/VTD_VD_KNN/TVL/V"
+VTD_VD_T_TVL_KNN = "/home/aa/Desktop/WJL/VTRAG/VectorDatabase/VTD_VD_KNN/TVL/T"
+VTD_VD_W_TVL_KNN = "/home/aa/Desktop/WJL/VTRAG/VectorDatabase/VTD_VD_KNN/TVL/W"
+
+VD_VD_V_TVL_KNN = "/home/aa/Desktop/WJL/VTRAG/VectorDatabase/VTD_VD_KNN/TVL/V"
+VD_VD_T_TVL_KNN = "/home/aa/Desktop/WJL/VTRAG/VectorDatabase/VTD_VD_KNN/TVL/T"
+VD_VD_W_TVL_KNN = "/home/aa/Desktop/WJL/VTRAG/VectorDatabase/VTD_VD_KNN/TVL/W"
+
 # LLM BASE
 LLM_BASE_PATH = "/home/aa/Desktop/WJL/LLMModel/"
 
@@ -57,5 +82,3 @@ MISSION_BUILDTOUCH = "BUILD THE TOUCH OF OBJECT"
 
 # Temp logging path
 EVAL_RESULT_PATH = "/home/aa/Desktop/WJL/VTRAG/Evaluate/EvalResult"
-
-
